@@ -4,8 +4,9 @@ type BookType = {
   price: number;
   content: string;
   thumbnail: { url: string };
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
+  tag: [];
 };
 
 type Purchase = {

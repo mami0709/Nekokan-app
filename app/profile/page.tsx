@@ -1,19 +1,12 @@
-// "use client";
-
-import React, { Suspense, useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import React from "react";
 import Image from "next/image";
-import PurchaseProduct from "../components/PurchaseProduct";
 import { getDetailBook } from "../lib/microcms/client";
-import { BookType, Purchase, User } from "../types/types";
-// import Loading from "../loading";
+import { BookType, Purchase } from "../types/types";
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "../lib/next-auth/options";
+import Book from "../components/Book";
 
 export default async function ProfilePage() {
-  // const [detailBooks, setDetailBooks] = useState<BookType[]>([]);
-
-  // 以下、カード情報追加のための関数などの追加
   const session = await getServerSession(nextAuthOptions);
   const user: any = session?.user;
 
@@ -22,7 +15,7 @@ export default async function ProfilePage() {
   );
   const data = await response.json();
 
-  // // 各購入履歴に対してmicroCMSから詳細情報を取得
+  // 各購入履歴に対してmicroCMSから詳細情報を取得
   const detailBooks = await Promise.all(
     data.map(async (purchase: Purchase) => {
       console.log(purchase.bookId);
@@ -50,10 +43,12 @@ export default async function ProfilePage() {
         </div>
       </div>
 
-      <span className="font-medium text-lg mb-4 mt-4 block">購入した記事</span>
+      <span className="font-medium text-lg mb-4 mt-4 block">
+        過去に購入した猫缶
+      </span>
       <div className="flex items-center gap-6">
         {detailBooks.map((detailBook: BookType) => (
-          <PurchaseProduct key={detailBook.id} detailBook={detailBook} />
+          <Book key={detailBook.id} book={detailBook} />
         ))}
       </div>
     </div>
