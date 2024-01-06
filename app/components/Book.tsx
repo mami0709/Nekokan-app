@@ -1,24 +1,21 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import React, { memo, useEffect, useState } from "react";
 import { BookType } from "../types/types";
-import { useState } from "react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type BookProps = {
   book: BookType;
+  user: any;
   isPurchased: boolean;
 };
 
 // eslint-disable-next-line react/display-name
-const Book = ({ book, isPurchased }: BookProps) => {
+const Book = memo(({ book, user, isPurchased }: BookProps) => {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
-
-  const { data: session } = useSession();
-  const user: any = session?.user;
 
   //stripe checkout
   const startCheckout = async (bookId: number) => {
@@ -103,6 +100,7 @@ const Book = ({ book, isPurchased }: BookProps) => {
         >
           <Image
             priority
+            // src={book.thumbnailUrl}
             src={book.thumbnail.url}
             alt={book.title}
             width={450}
@@ -111,11 +109,10 @@ const Book = ({ book, isPurchased }: BookProps) => {
           />
           <div className="px-4 py-4 bg-slate-100 rounded-b-md">
             <h2 className="text-lg font-semibold">{book.title}</h2>
-            <p className="mt-2 text-lg text-slate-600">この本は○○...</p>
+            {/* <p className="mt-2 text-lg text-slate-600">この本は○○...</p> */}
             <p className="mt-2 text-md text-slate-700">値段：{book.price}円</p>
           </div>
         </a>
-
         {showModal && (
           <div className="absolute top-0 left-0 right-0 bottom-0 bg-slate-900 bg-opacity-50 flex justify-center items-center modal">
             <div className="bg-white p-8 rounded-lg">
@@ -138,6 +135,6 @@ const Book = ({ book, isPurchased }: BookProps) => {
       </div>
     </>
   );
-};
+});
 
 export default Book;
