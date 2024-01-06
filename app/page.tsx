@@ -9,6 +9,13 @@ export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
   const user = session?.user as User;
 
+  // userがundefinedの場合、処理を早期に終了する
+  if (!user) {
+    // ユーザーがいない場合の適切な処理をここに記述
+    // 例: ログインページへリダイレクト、エラーメッセージの表示、等
+    return <div>No user found</div>;
+  }
+
   const { contents } = await getAllBooks();
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/purchases/${user.id}`
@@ -29,7 +36,7 @@ export default async function Home() {
           <Book
             key={book.id}
             book={book}
-            user={user}
+            // user={user}
             isPurchased={purchasedIds.includes(book.id)}
           />
         ))}
