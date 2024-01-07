@@ -1,11 +1,33 @@
 "use client";
 
 import { getDetailBook } from "@/app/lib/microcms/client";
+import Loading from "@/app/loading";
 import { BookType } from "@/app/types/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+
+const modalStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  position: "fixed" as "fixed",
+  top: "0",
+  left: "0",
+  right: "0",
+  bottom: "0",
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  zIndex: "1000",
+};
+
+const modalContentStyle = {
+  backgroundColor: "white",
+  padding: "20px",
+  borderRadius: "10px",
+  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+  zIndex: "1001",
+};
 
 const DetailBook = ({ params }: { params: { id: string } }) => {
   const [book, setBook] = useState<BookType | null>(null);
@@ -32,17 +54,12 @@ const DetailBook = ({ params }: { params: { id: string } }) => {
   }, [params.id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (!book) {
     return <div>Book not found</div>;
   }
-
-  const formattedPrice = new Intl.NumberFormat("ja-JP", {
-    style: "currency",
-    currency: "JPY",
-  }).format(book.price);
 
   //stripe checkout
   const startCheckout = async (bookId: number) => {
@@ -99,6 +116,15 @@ const DetailBook = ({ params }: { params: { id: string } }) => {
     router.back();
   };
 
+  const formattedPrice = new Intl.NumberFormat("ja-JP", {
+    style: "currency",
+    currency: "JPY",
+  }).format(book.price);
+
+  const formatContent = (content: string) => {
+    return { __html: content.replace(/\n/g, "<br>") };
+  };
+
   return (
     <div className="container mx-auto p-4 mt-8 mb-8">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -121,7 +147,7 @@ const DetailBook = ({ params }: { params: { id: string } }) => {
           <h2 className="text-3xl font-bold mt-5">{book.title}</h2>
           <div
             className="text-gray-700 mt-10 mb-20"
-            dangerouslySetInnerHTML={{ __html: book.content }}
+            dangerouslySetInnerHTML={formatContent(book.content)}
           />
 
           <div className="flex justify-center items-center space-x-2">
@@ -145,9 +171,9 @@ const DetailBook = ({ params }: { params: { id: string } }) => {
           </div>
 
           {showModal && (
-            <div className="absolute top-0 left-0 right-0 bottom-0 bg-slate-900 bg-opacity-50 flex justify-center items-center modal">
-              <div className="bg-white p-8 rounded-lg">
-                <h3 className="text-xl mb-4">猫缶を購入しますか？</h3>
+            <div style={modalStyle}>
+              <div style={modalContentStyle}>
+                <h3 className="text-xl mb-4">この猫缶を購入しますか？</h3>
                 <button
                   onClick={handleCancel}
                   className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-4"
@@ -156,7 +182,7 @@ const DetailBook = ({ params }: { params: { id: string } }) => {
                 </button>
                 <button
                   onClick={handlePurchaseConfirm}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
+                  className="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 rounded "
                 >
                   購入する
                 </button>

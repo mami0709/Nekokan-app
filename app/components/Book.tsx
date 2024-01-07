@@ -47,16 +47,16 @@ const Book = ({ book, isPurchased }: BookProps) => {
           href={`/book/${book.id}`}
           className="cursor-pointer shadow-2xl duration-300 hover:translate-y-1 hover:shadow-none"
         >
-          <Image
-            priority
-            src={book.thumbnail.url}
-            alt={book.title}
-            layout="responsive"
-            objectFit="cover"
-            width={300}
-            height={250}
-            className="rounded-t-md"
-          />
+          <div className="relative w-96 h-64">
+            <Image
+              priority
+              src={book.thumbnail.url}
+              alt={book.title}
+              layout="fill"
+              objectFit="cover"
+              className="rounded-t-md"
+            />
+          </div>
           <div className="px-4 py-4 bg-slate-100 rounded-b-md h-full">
             <h2 className="text-xl font-semibold">{book.title}</h2>
             {book.tag && (
@@ -75,10 +75,12 @@ const Book = ({ book, isPurchased }: BookProps) => {
               {truncateText(book.content, 50)}
             </p>
             <div className="flex justify-between items-center mt-3">
-              {isPurchased && (
+              {isPurchased ? (
                 <span className="bg-green-500 text-white px-2 py-1 text-xs rounded">
                   過去に購入済み
                 </span>
+              ) : (
+                <span className="flex-grow"></span>
               )}
               <p className="text-md text-slate-700 text-right">
                 {formattedPrice}
