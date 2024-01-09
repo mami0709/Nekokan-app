@@ -38,6 +38,12 @@ const PurchaseSuccess = () => {
     fetchData();
   }, [sessionId]);
 
+  useEffect(() => {
+    if (bookUrl) {
+      console.log("bookUrl updated", bookUrl);
+    }
+  }, [bookUrl]);
+
   return (
     <div className="flex items-center justify-center mt-20">
       <div className="bg-white p-6 rounded-lg shadow-lg">

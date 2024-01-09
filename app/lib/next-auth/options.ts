@@ -8,6 +8,22 @@ export const nextAuthOptions: NextAuthOptions = {
   debug: false,
   providers: [
     GitHubProvider({
+      // profile(profile) {
+      //   console.log("Profile Github: ", profile);
+      //   let userRole = "GitHub User";
+      //   if (profile?.email === "shincode0712@gmail.com") {
+      //     userRole = "admin";
+      //   }
+
+      //   return {
+      //     id: profile.id.toString(), // 'id' を string 型に変換
+      //     name: profile.name,
+      //     email: profile.email,
+      //     image: profile.avatar_url,
+      //     role: userRole, // 追加されるカスタムプロパティ
+      //     // 必要に応じて他のプロパティを追加
+      //   };
+      // },
       clientId: process.env.GITHUB_ID ?? "",
       clientSecret: process.env.GITHUB_SECRET ?? "",
     }),
@@ -24,5 +40,5 @@ export const nextAuthOptions: NextAuthOptions = {
       };
     },
   },
-  // secret: process.env.NEXTAUTH_SECRET,
+  //   secret: process.env.NEXTAUTH_SECRET,
 };

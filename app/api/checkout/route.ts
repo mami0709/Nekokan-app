@@ -1,7 +1,5 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
-
-// 初期化
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;

@@ -18,8 +18,10 @@ export default async function ProfilePage() {
   // 各購入履歴に対してmicroCMSから詳細情報を取得
   const detailBooks = await Promise.all(
     data.map(async (purchase: Purchase) => {
+      console.log(purchase.bookId);
       const res = await getDetailBook(purchase.bookId);
-      return res;
+      console.log(res);
+      return await getDetailBook(purchase.bookId);
     })
   );
 

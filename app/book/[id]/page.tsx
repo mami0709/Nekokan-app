@@ -63,6 +63,7 @@ const DetailBook = ({ params }: { params: { id: string } }) => {
 
   //stripe checkout
   const startCheckout = async (bookId: number) => {
+    console.log("startCheckoutです");
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
