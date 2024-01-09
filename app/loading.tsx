@@ -12,7 +12,6 @@ const LoadingSpinner = () => {
     <div className="spinner-container flex items-center justify-center min-h-screen">
       <ClipLoader size={size} color={color} />
 
-      {/* スタイル */}
       <style jsx>{`
         .spinner-container {
           display: flex;
