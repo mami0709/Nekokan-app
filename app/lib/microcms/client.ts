@@ -9,9 +9,10 @@ export const client = createClient({
 export const getAllBooks = async () => {
   const allBooks = await client.getList<BookType>({
     endpoint: "bookcommerce",
-    queries: {
-      offset: 0,
-      limit: 10,
+    customRequestInit: {
+      next: {
+        revalidate: 3600,
+      },
     },
   });
 
