@@ -13,14 +13,14 @@ export default async function Home() {
   let purchasesData = [];
   let purchasedIds: number[] = [];
 
-  // if (user) {
-  //   const response = await fetch(
-  //     `${process.env.NEXT_PUBLIC_API_URL}/purchases/${user.id}`
-  //   );
+  if (user) {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/purchases/${user.id}`
+    );
 
-  //   purchasesData = await response.json();
-  //   purchasedIds = purchasesData.map((purchase: Purchase) => purchase.bookId);
-  // }
+    purchasesData = await response.json();
+    purchasedIds = purchasesData.map((purchase: Purchase) => purchase.bookId);
+  }
 
   return (
     <>
