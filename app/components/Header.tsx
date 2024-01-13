@@ -57,15 +57,13 @@ const Header = async () => {
               {user ? "プロフィール" : "ログイン"}
             </span>
           </NavLink>
-          {user ? (
-            <Link
-              href={"/api/auth/signout"}
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
-              ログアウト
-            </Link>
-          ) : (
-            ""
+          {user && (
+            <NavLink href={"/api/auth/signout"}>
+              <PiCatLight className="transition-transform duration-300 group-hover:-translate-x-1" />
+              <span className="transition-transform duration-300 group-hover:scale-110">
+                ログアウト
+              </span>
+            </NavLink>
           )}
           {user ? (
             <Link
