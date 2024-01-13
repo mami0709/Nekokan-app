@@ -59,7 +59,7 @@ const Header = async () => {
           </NavLink>
           {user ? (
             <Link
-              href={"/api/auth/signout?callbackUrl=/"}
+              href={"/api/auth/signout"}
               className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
             >
               ログアウト
